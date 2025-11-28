@@ -51,14 +51,37 @@ export function buildImageUrl(path?: string | null): string {
 
 
 // ===================================================
+// PUBLIC VEHICLE TYPE (USED BY VEHICLE CARD)
+// ===================================================
+export type PublicVehicle = {
+  id: string;
+  plateFull: string;
+  plateShort: string;
+  model: string;
+  windowType: string;
+  capacity: number;
+  images: string[];
+  driver: {
+    firstName: string;
+    citizenship: string;
+    level: string;
+    languages: string[];
+    profileImage: string | null;
+  };
+};
+
+
+// ===================================================
 // FETCH PUBLIC VEHICLES FOR WORLD
 // ===================================================
-export async function fetchAllPublicVehicles() {
+export async function fetchAllPublicVehicles(): Promise<PublicVehicle[]> {
   const res = await fetch(`${BASE_URL}/api/public/vehicles`, {
     cache: "no-store",
   });
 
-  if (!res.ok) throw new Error(`Failed to fetch vehicles (${res.status})`);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch vehicles (${res.status})`);
+  }
 
   const data = await res.json();
   const raw = Array.isArray(data) ? data : data.vehicles ?? [];
