@@ -1,5 +1,6 @@
 import type React from "react";
 import type { Metadata } from "next";
+import { Providers } from "@/components/theme-provider";
 
 import "./globals.css";
 
@@ -32,10 +33,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-white text-black antialiased">
-        {children}
-      
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
